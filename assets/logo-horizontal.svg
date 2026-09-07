@@ -1,0 +1,30 @@
+<svg width="680" height="270" viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Provo Go logo</title>
+<desc>Logo for the Provo Go delivery app: a turquoise circle emblem containing a stylized Turk's head cactus, next to the "Provo Go" wordmark in navy and coral with three coral speed chevrons.</desc>
+
+<rect width="680" height="270" fill="#ffffff"/>
+
+<circle cx="130" cy="150" r="100" fill="#1FB6A8"/>
+
+<path d="M 40 235 Q 130 258 220 235 L 220 250 Q 130 270 40 250 Z" fill="#FDF6E3" opacity="0.85"/>
+
+<ellipse cx="130" cy="155" rx="55" ry="65" fill="#2E7D5B"/>
+<line x1="100" y1="105" x2="100" y2="205" stroke="#1F5C42" stroke-width="3" opacity="0.55" stroke-linecap="round"/>
+<line x1="115" y1="98" x2="115" y2="212" stroke="#1F5C42" stroke-width="3" opacity="0.55" stroke-linecap="round"/>
+<line x1="145" y1="98" x2="145" y2="212" stroke="#1F5C42" stroke-width="3" opacity="0.55" stroke-linecap="round"/>
+<line x1="160" y1="105" x2="160" y2="205" stroke="#1F5C42" stroke-width="3" opacity="0.55" stroke-linecap="round"/>
+
+<ellipse cx="130" cy="92" rx="38" ry="25" fill="#FF6F61"/>
+<line x1="112" y1="80" x2="112" y2="104" stroke="#E85347" stroke-width="2.5" opacity="0.6" stroke-linecap="round"/>
+<line x1="130" y1="76" x2="130" y2="108" stroke="#E85347" stroke-width="2.5" opacity="0.6" stroke-linecap="round"/>
+<line x1="148" y1="80" x2="148" y2="104" stroke="#E85347" stroke-width="2.5" opacity="0.6" stroke-linecap="round"/>
+
+<text x="260" y="150" font-size="58" font-weight="500" font-family="Arial, sans-serif" fill="#0B3C5D">Provo</text>
+<text x="432" y="150" font-size="58" font-weight="500" font-family="Arial, sans-serif" fill="#FF6F61">Go</text>
+
+<text x="261" y="188" font-size="18" font-weight="400" font-family="Arial, sans-serif" fill="#0B3C5D" opacity="0.65">Providenciales &#183; Turks &amp; Caicos</text>
+
+<path d="M 520 130 L 535 150 L 520 170" stroke="#FF6F61" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+<path d="M 548 130 L 563 150 L 548 170" stroke="#FF6F61" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
+<path d="M 576 130 L 591 150 L 576 170" stroke="#FF6F61" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

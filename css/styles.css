@@ -1,0 +1,133 @@
+/* ============================================================
+   Provo Go — hoja de estilos principal
+   Tailwind + daisyUI 5 se cargan por CDN desde el HTML.
+   Este archivo debe enlazarse DESPUES del CDN de daisyUI
+   para que el tema "provogo" tenga prioridad.
+
+   Uso en el HTML:
+     <html lang="es" data-theme="provogo">
+   ============================================================ */
+
+
+
+/* ============================================================
+   1. Tema daisyUI "provogo"
+   ============================================================ */
+[data-theme="provogo"] {
+  color-scheme: light;
+
+  /* --- Colores de marca --- */
+  --color-primary: #1FB6A8;
+  /* turquesa Provo */
+  --color-primary-content: #04302C;
+
+  --color-secondary: #0B3C5D;
+  /* azul profundo */
+  --color-secondary-content: #FFFFFF;
+
+  --color-accent: #FF6F61;
+  /* coral */
+  --color-accent-content: #3D0F09;
+
+  --color-neutral: #0B3C5D;
+  --color-neutral-content: #FDF6E3;
+
+  /* --- Superficies --- */
+  --color-base-100: #FFFFFF;
+  /* fondo principal */
+  --color-base-200: #FDF6E3;
+  /* crema (tarjetas, secciones) */
+  --color-base-300: #F3E9CE;
+  /* bordes / hover */
+  --color-base-content: #0B3C5D;
+  /* texto */
+
+  /* --- Colores de estado --- */
+  --color-info: #2A9DF4;
+  --color-info-content: #FFFFFF;
+  --color-success: #22C55E;
+  --color-success-content: #052E16;
+  --color-warning: #F5A524;
+  --color-warning-content: #3A2405;
+  --color-error: #E23D28;
+  --color-error-content: #FFFFFF;
+
+  /* --- Formas y tamanos --- */
+  --radius-selector: 1rem;
+  /* checkbox, toggle, badge */
+  --radius-field: 0.75rem;
+  /* input, select, botones */
+  --radius-box: 1.25rem;
+  /* card, modal, alert */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+/* ============================================================
+   2. Tipografia base
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Outfit', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* ============================================================
+   3. Utilidades propias de Provo Go
+   ============================================================ */
+
+/* Degradado de marca para hero / cabeceras */
+.pg-gradient {
+  background-image: linear-gradient(135deg, #1FB6A8 0%, #0B3C5D 100%);
+}
+
+
+/* Sombra suave para tarjetas de producto / comercio */
+.pg-card-shadow {
+  box-shadow: 0 4px 6px -1px rgb(11 60 93 / 0.08),
+    0 10px 25px -5px rgb(11 60 93 / 0.10);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+
+/* ============================================================
+   4. Accesibilidad
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid #1FB6A8;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

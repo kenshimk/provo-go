@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!-- data-theme="provogo" activa el tema de marca definido en css/styles.css -->
+<html lang="en" data-theme="provogo">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provo Go — Sign in</title>
+  <meta name="description" content="Food delivery in Providenciales, Turks and Caicos." />
+
+  <!-- 1. Fuente Outfit (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- 2. daisyUI 5 (componentes) -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+
+  <!-- 3. Tailwind version navegador (sin npm, sin paso de build) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- 4. Nuestro tema, de ultimo para que gane sobre los colores por defecto -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="bg-base-200 min-h-screen flex items-center justify-center p-4">
+
+  <!-- Columna central: logo + tarjeta -->
+  <main class="w-full max-w-sm flex flex-col items-center gap-6">
+
+    <!-- Logo. El archivo aun no existe: hasta entonces se ve el texto del alt -->
+    <img src="assets/logo.svg" alt="Provo Go" class="h-40 w-auto mx-auto" />
+
+    <!-- Card centrada, componente "Card with centered content and paddings" -->
+    <div class="card bg-base-100 w-full shadow-xl">
+      <div class="card-body items-center text-center">
+
+        <!-- Pestañas. Sign in queda activa; el cambio se hara con JS mas adelante -->
+        <div role="tablist" class="tabs tabs-box w-full">
+          <a role="tab" class="tab tab-active">Sign in</a>
+          <a role="tab" class="tab">Create account</a>
+        </div>
+
+        <!-- ================= Formulario: Sign in ================= -->
+        <form id="form-signin" class="w-full flex flex-col gap-3 mt-2">
+
+          <h2 class="card-title justify-center">Welcome back</h2>
+          <p class="text-sm opacity-70 -mt-1">Order food anywhere in Provo.</p>
+
+          <!-- Input con la etiqueta dentro ("Text input with text label inside") -->
+          <label class="input w-full">
+            <span class="label">Email</span>
+            <input type="email" placeholder="you@example.com" />
+          </label>
+
+          <label class="input w-full">
+            <span class="label">Password</span>
+            <input type="password" placeholder="Your password" />
+          </label>
+
+          <button type="button" class="btn btn-primary w-full mt-2">Sign in</button>
+        </form>
+
+        <!-- ============== Formulario: Create account ==============
+             Oculto con la clase hidden. El JS de la proxima tarea
+             quitara esta clase al pulsar la pestaña Create account. -->
+        <form id="form-signup" class="w-full flex flex-col gap-3 mt-2 hidden">
+
+          <h2 class="card-title justify-center">Create your account</h2>
+          <p class="text-sm opacity-70 -mt-1">It only takes a minute.</p>
+
+          <label class="input w-full">
+            <span class="label">Full name</span>
+            <input type="text" placeholder="Jane Smith" />
+          </label>
+
+          <label class="input w-full">
+            <span class="label">Email</span>
+            <input type="email" placeholder="you@example.com" />
+          </label>
+
+          <label class="input w-full">
+            <span class="label">Phone</span>
+            <input type="tel" placeholder="+1 649 000 0000" />
+          </label>
+
+          <label class="input w-full">
+            <span class="label">Password</span>
+            <input type="password" placeholder="At least 6 characters" />
+          </label>
+
+          <button type="button" class="btn btn-primary w-full mt-2">Create account</button>
+        </form>
+
+      </div>
+    </div>
+
+    <p class="text-xs opacity-60">Providenciales, Turks and Caicos</p>
+  </main>
+
+</body>
+
+</html>
