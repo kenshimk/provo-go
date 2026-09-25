@@ -115,3 +115,9 @@ main {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(11, 60, 93, 0.15);
 }
+
+.logo {
+    display: block;
+    width: 170px;
+    margin: 0 auto 16px auto;
+}
