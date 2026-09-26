@@ -11,6 +11,10 @@
 <body>
     <main class="login-box">
         <img src="assets/logo.svg" alt="Provo Go" class="logo">
+        <div class="tabs">
+            <button type="button" id="tab-signing" class="tab tab-active">Sign in</button>
+            <button type="button" id="tab-signup" class="tab">Create account</button>
+        </div>
         <h1>Welcome Back</h1>
         <form action="home.html" method="post">
             <label for="email">Email</label>
@@ -21,6 +25,21 @@
 
             <button type="submit">Sign in</button>
 
+        </form>
+        <form action="home.html" id="form-signup" class="hidden">
+            <label for="fullname">Full name</label>
+            <input type="text" id="fullname" placeholder="Your name" required>
+
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" placeholder="you@example.com" required>
+
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" placeholder="+1 649 000 0000" required>
+
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" placeholder="At least 6 characters" required minlength="6">
+
+            <button type="submit">Create account</button>
         </form>
     </main>
 </body>
