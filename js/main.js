@@ -1,5 +1,5 @@
 import { auth } from "./firebase-config.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 // Referencias a los elementos que necesito controlar
 const tabSignin = document.getElementById("tab-signin");
@@ -40,5 +40,21 @@ formSignup.addEventListener("submit", async function (event) {
         window.location.href = "home.html";
     } catch (error) {
         console.log("Signup error:", error.code);
+    }
+});
+
+// Inicio de sesion con correo y contraseña
+formSignin.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+        const credential = await signInWithEmailAndPassword(auth, email, password);
+        console.log("Signed in:", credential.user.uid);
+        window.location.href = "home.html";
+    } catch (error) {
+        console.log("Login error:", error.code);
     }
 });
