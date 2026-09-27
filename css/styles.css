@@ -147,3 +147,12 @@ main {
     border-color: #1FB6A8;
     font-weight: bold;
 }
+
+.message {
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 14px;
+    background-color: #FDECEA;
+    color: #B3261E;
+}
