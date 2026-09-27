@@ -161,3 +161,54 @@ mostrar, no un número con el que vaya a calcular.
   Product, Cart y Order. Ahí tiene sentido porque son cosas con estado y
   comportamiento propio. Meterla antes sería forzarla.
 - Preguntar al profesor qué diagramas quiere en el informe.
+
+---
+
+## Visión del producto completo
+
+Lo que sigue es el alcance del producto si continúa después del curso.
+No está en el alcance de la entrega final.
+
+### Restaurantes
+
+- Logo y banner de portada
+- Descripción breve del negocio
+- Categorías múltiples, no una sola (Pizza Pizza también es famoso
+  por su pollo frito)
+- Rating y reviews de clientes
+- Rango de precios
+- Distancia desde el cliente
+- Horarios especiales
+- Pedido mínimo
+- Pickup además de delivery
+- Promociones
+- Platos populares
+- Menús distintos según la hora, como McDonald's
+
+### Productos
+
+- Foto del plato
+- Calorías
+- Tags
+- Tiempo de preparación
+- Disponibilidad por horario
+- Modifier groups: agregar o quitar queso, bacon, tamaño, salsa.
+  Unos obligatorios (el tamaño de una pizza) y otros opcionales
+  (los toppings)
+- Instrucciones especiales por producto y por orden completa, con
+  límite de caracteres. Importante para personas alérgicas
+
+### Delivery
+
+- Disponibilidad por zona
+- Fee variable
+- Tiempo estimado
+- Distancia y distancia máxima
+- Pedido mínimo
+- Delivery gratis a partir de cierto monto
+- Fee por orden pequeña
+- Service fee
+
+### Checkout
+
+Pendiente de definir.
