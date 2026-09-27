@@ -161,3 +161,13 @@ main {
 .checking main {
     visibility: hidden;
 }
+
+.badge-closed {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background-color: #EDEDED;
+    color: #666666;
+    font-size: 12px;
+    margin-left: 8px;
+}
