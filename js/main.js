@@ -1,3 +1,6 @@
+import { auth } from "./firebase-config.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 // Referencias a los elementos que necesito controlar
 const tabSignin = document.getElementById("tab-signin");
 const tabSignup = document.getElementById("tab-signup");
@@ -5,7 +8,7 @@ const formSignin = document.getElementById("form-signin");
 const formSignup = document.getElementById("form-signup");
 
 // Muestra el formulario de login y marca su pestaña
-function mostrarLogin() {
+function showLogin() {
     formSignin.classList.remove("hidden");
     formSignup.classList.add("hidden");
     tabSignin.classList.add("tab-active");
@@ -13,7 +16,7 @@ function mostrarLogin() {
 }
 
 // Muestra el formulario de registro y marca su pestaña
-function mostrarRegistro() {
+function showSignup() {
     formSignup.classList.remove("hidden");
     formSignin.classList.add("hidden");
     tabSignup.classList.add("tab-active");
@@ -21,5 +24,21 @@ function mostrarRegistro() {
 }
 
 // Cada pestaña llama a su funcion al hacer clic
-tabSignin.addEventListener("click", mostrarLogin);
-tabSignup.addEventListener("click", mostrarRegistro);
+tabSignin.addEventListener("click", showLogin);
+tabSignup.addEventListener("click", showSignup);
+
+// Registro de un usuario nuevo en Firebase Authentication
+formSignup.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+
+    try {
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log("User created:", credential.user.uid);
+        window.location.href = "home.html";
+    } catch (error) {
+        console.log("Signup error:", error.code);
+    }
+});
