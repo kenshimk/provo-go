@@ -212,3 +212,66 @@ No está en el alcance de la entrega final.
 ### Checkout
 
 Pendiente de definir.
+
+## Limitaciones conocidas
+
+Cosas que sé que están incompletas y por qué las dejé así.
+
+### Usuarios huérfanos en el registro
+
+El registro hace dos operaciones separadas: crear el usuario en
+Authentication y después guardar su perfil en Firestore. Si la primera
+funciona y la segunda falla (por ejemplo se cae la conexión justo ahí),
+queda un usuario que puede iniciar sesión pero no tiene perfil.
+
+La solución correcta es una Cloud Function que cree el perfil del lado
+del servidor cuando nace un usuario. Eso requiere el plan de pago de
+Firebase, así que no aplica en este proyecto.
+
+### El teléfono se puede repetir
+
+Firestore no tiene restricción de unicidad como el UNIQUE de SQL. Dos
+usuarios pueden registrarse con el mismo número.
+
+Consultar antes de escribir no sirve, porque dos registros simultáneos
+pasan la revisión antes de que cualquiera escriba. La alternativa es una
+colección de bloqueo donde el ID del documento sea el número de teléfono,
+pero agrega complejidad que no paga en este alcance.
+
+La solución real no es una restricción sino verificación por SMS: mandar
+un código y guardar el número solo si el usuario demuestra que es suyo.
+Eso queda para más adelante.
+
+En esta app el identificador es el correo, que Firebase sí valida como
+único. El teléfono es solo un dato de contacto.
+
+### La protección del home no es seguridad
+
+onAuthStateChanged redirige al login si no hay sesión, pero es JavaScript
+corriendo en el navegador del usuario y se puede desactivar. Sirve para la
+experiencia de uso.
+
+Lo que sí protege los datos son las Security Rules de Firestore, que
+corren en los servidores de Google. Aunque alguien vea el HTML del home,
+sin sesión válida Firestore no le entrega ni un dato.
+
+### La aprobación de restaurantes es manual
+
+Las Security Rules ya impiden que un usuario se asigne el rol de admin o
+se apruebe a sí mismo. Pero la interfaz para que yo apruebe restaurantes
+no existe: lo hago cambiando el campo desde la consola de Firebase.
+
+Un panel de administrador es otra pantalla completa con su propia lógica
+y no demuestra nada que las reglas no demuestren ya.
+
+### No hay ratings ni reviews
+
+Un rating real sale de reviews reales. Poner un número inventado sería
+mostrar un dato falso. Implica una colección de reviews, un promedio
+calculado y permisos de quién puede opinar. Queda fuera del alcance.
+
+### Los precios se guardan en dólares enteros
+
+Funciona porque todos los precios de prueba son redondos. Si más adelante
+hay centavos, hay que evaluar guardarlos como centavos enteros (1850 en
+vez de 18.50) para evitar errores de coma flotante al sumar el carrito.
