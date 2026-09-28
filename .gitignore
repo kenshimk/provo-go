@@ -17,6 +17,3 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
-
-# Contexto para el agente de IA
-CLAUDE.md
