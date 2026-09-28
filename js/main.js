@@ -1,5 +1,6 @@
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // Referencias a los elementos que necesito controlar
 const formTitle = document.querySelector("h1");
@@ -68,11 +69,24 @@ formSignup.addEventListener("submit", async function (event) {
     event.preventDefault();
     hideMessage(signupMessage);
 
+    const fullName = document.getElementById("fullname").value;
+    const phone = document.getElementById("phone").value;
     const email = document.getElementById("signup-email").value;
     const password = document.getElementById("signup-password").value;
 
     try {
         const credential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Guardo el perfil en Firestore usando el uid de Authentication como ID
+        // del documento, para que las dos cosas queden enlazadas.
+        await setDoc(doc(db, "users", credential.user.uid), {
+            fullName: fullName,
+            phone: phone,
+            email: email,
+            role: "customer",
+            createdAt: serverTimestamp()
+        });
+
         console.log("User created:", credential.user.uid);
         window.location.href = "home.html";
     } catch (error) {
