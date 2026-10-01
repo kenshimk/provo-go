@@ -136,7 +136,7 @@ layout al aparecer.
 
 ### Modelo de datos de Firestore
 
-Dos colecciones: `restaurants` y `products`.
+Tres colecciones: `restaurants`, `products` y `users`.
 
 Los precios se guardan como número, no como texto. Un `"$4"` no se puede
 sumar ni ordenar. El símbolo de dólar es presentación y se agrega al
@@ -151,12 +151,45 @@ restaurantes a la vez.
 El `deliveryTime` sí va como texto porque es un rango aproximado para
 mostrar, no un número con el que vaya a calcular.
 
+### Los perfiles de usuario en Firestore
+
+Authentication solo guarda correo y contraseña. El nombre, el teléfono y
+el rol van en una colección `users`. El ID de cada documento es el uid que
+Authentication genera, así las dos partes quedan enlazadas sin un campo
+extra que las relacione.
+
+### El cliente nunca decide su propio rol
+
+Al registrarse, la app escribe `role: "customer"`. Las Security Rules
+verifican ese valor al crear y no permiten cambiarlo después. Si alguien
+modificara el JavaScript desde el navegador para mandar `role: "admin"`,
+Firestore rechazaría la escritura.
+
+### Security Rules por colección
+
+`restaurants` y `products` son de solo lectura, y solo para usuarios con
+sesión iniciada. Los cambios los hago yo desde la consola de Firebase.
+
+En `users`, cada quien lee y edita únicamente su propio documento. El
+borrado está deshabilitado para todos.
+
+Las reglas están en `firestore.rules` dentro del repositorio, no solo en
+la consola de Firebase. Así quedan versionadas junto al código y se ve
+cuándo cambiaron y por qué. En `firebase.json` el archivo está en la lista
+de `ignore` del hosting para que no se suba como parte del sitio público.
+
+### La alerta de secret scanning de GitHub
+
+GitHub detectó el `apiKey` de Firebase en `js/firebase-config.js` y abrió
+una alerta de seguridad. La cerré como falso positivo. La configuración
+web de Firebase viaja al navegador por diseño y cualquiera puede verla con
+las herramientas de desarrollo. No es una credencial secreta y no hay nada
+que rotar. Lo que protege los datos son las Security Rules y la lista de
+dominios autorizados.
 ---
 
 ## Pendientes y decisiones abiertas
 
-- El nombre y el teléfono del registro todavía no se guardan en ningún
-  lado. Firebase Authentication solo maneja credenciales. Van a Firestore.
 - La programación orientada a objetos entra en la semana 3, con las clases
   Product, Cart y Order. Ahí tiene sentido porque son cosas con estado y
   comportamiento propio. Meterla antes sería forzarla.
@@ -245,15 +278,6 @@ Eso queda para más adelante.
 En esta app el identificador es el correo, que Firebase sí valida como
 único. El teléfono es solo un dato de contacto.
 
-### La protección del home no es seguridad
-
-onAuthStateChanged redirige al login si no hay sesión, pero es JavaScript
-corriendo en el navegador del usuario y se puede desactivar. Sirve para la
-experiencia de uso.
-
-Lo que sí protege los datos son las Security Rules de Firestore, que
-corren en los servidores de Google. Aunque alguien vea el HTML del home,
-sin sesión válida Firestore no le entrega ni un dato.
 
 ### La aprobación de restaurantes es manual
 
