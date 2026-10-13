@@ -46,6 +46,11 @@ function renderRestaurants(restaurants) {
         card.appendChild(info);
         card.appendChild(fee);
 
+        // Al tocar la tarjeta, abre el menu de ese restaurante.
+        card.addEventListener("click", function () {
+            window.location.href = "restaurant.html?id=" + restaurant.id;
+        });
+
         container.appendChild(card);
     });
 }
