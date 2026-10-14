@@ -14,6 +14,9 @@ const cart = Cart.load();
 // Si el restaurante esta cerrado no se puede agregar nada al carrito.
 let restaurantIsOpen = true;
 
+// Guardo el temporizador del aviso para poder reiniciarlo.
+let toastTimer = null;
+
 
 // Trae un solo restaurante por su id de documento.
 async function getRestaurant(id) {
@@ -41,6 +44,21 @@ async function getProducts(id) {
     });
 
     return products;
+}
+
+// Muestra un aviso abajo de la pantalla y lo esconde a los 2 segundos.
+function showToast(text) {
+    const toast = document.getElementById("toast");
+    toast.textContent = text;
+    toast.classList.add("toast-visible");
+
+    // Si ya habia un aviso en pantalla reinicio el contador, para que al
+    // agregar varias cosas seguidas no se esconda antes de tiempo.
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(function () {
+        toast.classList.remove("toast-visible");
+    }, 2000);
 }
 
 // Escribe el nombre y los datos del restaurante arriba de la pagina.
@@ -111,6 +129,7 @@ function renderProducts(products) {
 
                 cart.add(product, restaurantId);
                 updateCartLink();
+                showToast(product.name + " added to cart");
             });
 
             card.appendChild(button);
