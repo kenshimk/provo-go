@@ -86,6 +86,16 @@ function renderProducts(products) {
             button.textContent = "Add";
 
             button.addEventListener("click", function () {
+                // Si el carrito tiene comida de otro restaurante, aviso antes
+                // de vaciarlo. Un pedido no puede venir de dos cocinas.
+                if (cart.restaurantId !== null && cart.restaurantId !== restaurantId) {
+                    const ok = confirm("Your cart has items from another restaurant. Adding this will empty it. Continue?");
+
+                    if (!ok) {
+                        return;
+                    }
+                }
+
                 cart.add(product, restaurantId);
                 updateCartLink();
             });
