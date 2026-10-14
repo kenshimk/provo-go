@@ -31,15 +31,20 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // Cada usuario solo ve sus propios pedidos. Un pedido no se puede
-    // editar ni borrar despues de creado porque es un registro historico.
+    // Cada usuario solo ve sus propios pedidos. Un pedido no se puede editar
+    // ni borrar despues de creado porque es un registro historico.
+    //
+    // El get() del final lee el documento del restaurante y comprueba que
+    // este abierto. Asi, aunque alguien quite el bloqueo del boton desde el
+    // navegador, el servidor rechaza el pedido igual.
     match /orders/{orderId} {
       allow read: if request.auth != null
                   && request.auth.uid == resource.data.userId;
 
       allow create: if request.auth != null
                     && request.auth.uid == request.resource.data.userId
-                    && request.resource.data.status == "received";
+                    && request.resource.data.status == "received"
+                    && get(/databases/$(database)/documents/restaurants/$(request.resource.data.restaurantId)).data.isOpen == true;
 
       allow update, delete: if false;
     }

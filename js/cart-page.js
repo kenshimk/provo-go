@@ -121,10 +121,13 @@ orderForm.addEventListener("submit", async function (event) {
 
     try {
         const order = new Order(currentUser.uid, restaurant, cart, address);
-        await addDoc(collection(db, "orders"), order.toFirestore(serverTimestamp()));
+
+        // addDoc devuelve una referencia al documento creado, de ahi saco el
+        // id para poder abrir la pantalla de confirmacion de este pedido.
+        const reference = await addDoc(collection(db, "orders"), order.toFirestore(serverTimestamp()));
 
         cart.clear();
-        window.location.href = "orders.html";
+        window.location.href = "order-confirmation.html?id=" + reference.id;
     } catch (error) {
         console.log("Order error:", error.code);
         showMessage("Could not place your order. Please try again.", false);
@@ -158,4 +161,10 @@ onAuthStateChanged(auth, async function (user) {
     }
 
     renderCart();
+    // Si el restaurante cerro mientras el carrito estaba lleno, bloqueo el
+    // boton de confirmar en vez de dejar mandar un pedido que nadie va a ver.
+    if (restaurant && !restaurant.isOpen) {
+        document.getElementById("place-order").disabled = true;
+        showMessage("This restaurant is closed right now. You cannot place this order.", false);
+    }
 });

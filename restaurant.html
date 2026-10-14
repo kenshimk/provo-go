@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Provo Go - Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -14,11 +17,12 @@
     <header class="topbar">
         <a href="home.html">Back</a>
         <h1 id="restaurant-name">Menu</h1>
-        <a href="cart.html" id="cart-link">Cart (0)</a>
+        <a href="cart.html" id="cart-link" class="cta">Cart (0)</a>
     </header>
 
     <main>
         <p id="restaurant-info"></p>
+        <p id="closed-notice" class="message hidden"></p>
         <div id="product-list"></div>
     </main>
 

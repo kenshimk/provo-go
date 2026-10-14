@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provo Go - Order placed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+
+<body class="home-page checking">
+
+    <header class="topbar">
+        <img src="assets/logo-topbar.svg" alt="Provo Go">
+        <a href="orders.html">My orders</a>
+    </header>
+
+    <main>
+
+        <div class="confirmation">
+            <div class="check-circle">&#10003;</div>
+            <h2>Order placed</h2>
+            <p class="subtitle" id="confirmation-text"></p>
+        </div>
+
+        <div class="progress" id="progress"></div>
+
+        <div class="order-card" id="order-detail"></div>
+
+        <a href="home.html" class="button-link">Order something else</a>
+
+    </main>
+
+    <script type="module" src="js/order-confirmation.js"></script>
+
+</body>
+
+
+</html>

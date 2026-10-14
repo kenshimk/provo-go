@@ -1,6 +1,7 @@
 import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { Cart } from "./cart.js";
 
 
 // Trae todos los restaurantes de Firestore
@@ -12,6 +13,11 @@ async function getRestaurants() {
         const data = document.data();
         data.id = document.id;
         restaurants.push(data);
+    });
+    // Muestro primero los que estan abiertos. Number convierte true en 1 y
+    // false en 0, asi la resta ordena los abiertos arriba.
+    restaurants.sort(function (a, b) {
+        return Number(b.isOpen) - Number(a.isOpen);
     });
 
     return restaurants;
@@ -54,6 +60,8 @@ function renderRestaurants(restaurants) {
         container.appendChild(card);
     });
 }
+
+
 // Si no hay sesion activa, devuelve al login
 onAuthStateChanged(auth, async function (user) {
     if (!user) {
@@ -62,6 +70,10 @@ onAuthStateChanged(auth, async function (user) {
     }
 
     document.body.classList.remove("checking");
+
+    // Muestro cuantas cosas hay en el carrito sin tener que entrar a el.
+    const cart = Cart.load();
+    document.getElementById("cart-link").textContent = "Cart (" + cart.getCount() + ")";
 
     try {
         const restaurants = await getRestaurants();

@@ -11,6 +11,9 @@ const restaurantId = params.get("id");
 // Recupero el carrito guardado en el navegador.
 const cart = Cart.load();
 
+// Si el restaurante esta cerrado no se puede agregar nada al carrito.
+let restaurantIsOpen = true;
+
 
 // Trae un solo restaurante por su id de documento.
 async function getRestaurant(id) {
@@ -48,6 +51,14 @@ function renderHeader(restaurant) {
     info.textContent = restaurant.categories.join(", ")
         + " · " + restaurant.deliveryTime
         + " · Delivery $" + restaurant.deliveryFee;
+
+    // Si esta cerrado lo aviso arriba, antes de que el usuario pierda
+    // tiempo eligiendo platos.
+    if (!restaurant.isOpen) {
+        const notice = document.getElementById("closed-notice");
+        notice.textContent = "This restaurant is closed right now. You can see the menu but not order.";
+        notice.classList.remove("hidden");
+    }
 }
 
 // Dibuja la tarjeta de cada plato con su boton de agregar.
@@ -57,6 +68,7 @@ function renderProducts(products) {
 
     if (products.length === 0) {
         const empty = document.createElement("p");
+        empty.className = "empty";
         empty.textContent = "This restaurant has no items yet.";
         container.appendChild(empty);
         return;
@@ -80,7 +92,8 @@ function renderProducts(products) {
         card.appendChild(description);
         card.appendChild(price);
 
-        if (product.available) {
+        // Solo hay boton si el plato esta disponible y el local esta abierto.
+        if (product.available && restaurantIsOpen) {
             const button = document.createElement("button");
             button.className = "add-button";
             button.textContent = "Add";
@@ -102,10 +115,10 @@ function renderProducts(products) {
 
             card.appendChild(button);
         } else {
-            const soldOut = document.createElement("span");
-            soldOut.className = "badge-closed";
-            soldOut.textContent = "Not available";
-            card.appendChild(soldOut);
+            const badge = document.createElement("span");
+            badge.className = "badge-closed";
+            badge.textContent = restaurantIsOpen ? "Not available" : "Closed";
+            card.appendChild(badge);
         }
 
         container.appendChild(card);
@@ -141,6 +154,8 @@ onAuthStateChanged(auth, async function (user) {
             document.getElementById("restaurant-name").textContent = "Restaurant not found";
             return;
         }
+
+        restaurantIsOpen = restaurant.isOpen;
 
         renderHeader(restaurant);
 

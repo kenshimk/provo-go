@@ -2,6 +2,14 @@ import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+// Un pedido esta activo mientras no haya sido entregado.
+const ACTIVE_STATUSES = ["received", "preparing", "on the way"];
+
+// Guardo aqui todos los pedidos para no volver a pedirlos a Firestore
+// cada vez que el usuario cambia de pestaña.
+let allOrders = [];
+let currentTab = "active";
+
 
 // Trae solo los pedidos del usuario que tiene la sesion abierta.
 async function getOrders(userId) {
@@ -31,6 +39,15 @@ async function getOrders(userId) {
     return orders;
 }
 
+// Separa los pedidos segun la pestaña elegida.
+function filterOrders(orders, tab) {
+    return orders.filter(function (order) {
+        // includes devuelve true si el estado esta en la lista de activos.
+        const isActive = ACTIVE_STATUSES.includes(order.status);
+        return tab === "active" ? isActive : !isActive;
+    });
+}
+
 // Convierte la fecha de Firestore a algo legible.
 function formatDate(timestamp) {
     if (!timestamp) {
@@ -45,6 +62,17 @@ function formatDate(timestamp) {
     });
 }
 
+// Elige la clase de color segun el estado del pedido.
+function statusClass(status) {
+    if (status === "delivered") {
+        return "status-delivered";
+    }
+    if (status === "received") {
+        return "status-received";
+    }
+    return "status-preparing";
+}
+
 // Dibuja la tarjeta de cada pedido con sus platos y su total.
 function renderOrders(orders) {
     const container = document.getElementById("order-list");
@@ -52,20 +80,23 @@ function renderOrders(orders) {
 
     if (orders.length === 0) {
         const empty = document.createElement("p");
-        empty.textContent = "You have no orders yet.";
+        empty.className = "empty";
+        empty.textContent = currentTab === "active"
+            ? "You have no active orders right now."
+            : "You have no past orders yet.";
         container.appendChild(empty);
         return;
     }
 
     orders.forEach(function (order) {
         const card = document.createElement("article");
-        card.className = "order-card";
+        card.className = "order-card order-card-link";
 
         const title = document.createElement("h3");
         title.textContent = order.restaurantName;
 
         const status = document.createElement("span");
-        status.className = "badge-status";
+        status.className = "badge-status " + statusClass(order.status);
         status.textContent = order.status;
         title.appendChild(status);
 
@@ -96,9 +127,33 @@ function renderOrders(orders) {
         card.appendChild(address);
         card.appendChild(total);
 
+        // Al tocar el pedido, abre su pantalla de seguimiento.
+        card.addEventListener("click", function () {
+            window.location.href = "order-confirmation.html?id=" + order.id;
+        });
+
         container.appendChild(card);
     });
 }
+
+// Cambia de pestaña sin volver a consultar la base de datos.
+function showTab(tab) {
+    currentTab = tab;
+
+    document.getElementById("tab-active").classList.toggle("tab-active", tab === "active");
+    document.getElementById("tab-past").classList.toggle("tab-active", tab === "past");
+
+    renderOrders(filterOrders(allOrders, tab));
+}
+
+
+document.getElementById("tab-active").addEventListener("click", function () {
+    showTab("active");
+});
+
+document.getElementById("tab-past").addEventListener("click", function () {
+    showTab("past");
+});
 
 
 // Si no hay sesion activa devuelve al login.
@@ -111,8 +166,8 @@ onAuthStateChanged(auth, async function (user) {
     document.body.classList.remove("checking");
 
     try {
-        const orders = await getOrders(user.uid);
-        renderOrders(orders);
+        allOrders = await getOrders(user.uid);
+        showTab("active");
     } catch (error) {
         console.log("Error loading orders:", error.code);
     }

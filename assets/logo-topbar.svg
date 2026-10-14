@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" width="560" height="200" role="img" aria-label="Provo Go">
+  <circle cx="100" cy="100" r="80" fill="#1FB6A8"/>
+  <path d="M 28 168 Q 100 186 172 168 L 172 180 Q 100 196 28 180 Z" fill="#FDF6E3" opacity="0.85"/>
+  <text x="210" y="120" font-size="58" font-weight="600" font-family="Outfit, Arial, sans-serif" fill="#0B3C5D">Provo</text>
+  <text x="382" y="120" font-size="58" font-weight="600" font-family="Outfit, Arial, sans-serif" fill="#FF6F61">Go</text>
+  <path d="M 470 80 L 485 100 L 470 120" stroke="#FF6F61" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 498 80 L 513 100 L 498 120" stroke="#FF6F61" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 526 80 L 541 100 L 526 120" stroke="#FF6F61" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
